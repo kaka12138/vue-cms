@@ -57,6 +57,34 @@ const newsinfo = function() {
 
 }
 
+// 评论数据(默认返回第一页的数据: pageindex=1)
+const commentslist = function() {
+    let comments = []
+
+    for(let i=1; i<11; i++){
+        let user_name = Random.cname()  // 评论用户
+        let add_time = Random.datetime() // 评论时间
+        let content = Random.csentence(10, 30) // 评论内容
+        let one_comment = { user_name: user_name, add_time: add_time, content: content}
+        comments.push(one_comment)
+    }
+
+    return {
+        message: comments
+    }
+
+}
+
+// 模拟处理评论数据
+const deal_comment = function() {
+    let code = 0
+    let deal_message = "评论成功"
+
+    return {
+        message: { code: code, deal_message: deal_message }
+    }
+}
+
 
 
 // 定义API
@@ -78,4 +106,73 @@ Mock.mock("/home/newsinfo/7", "get", newsinfo)
 Mock.mock("/home/newsinfo/8", "get", newsinfo)
 Mock.mock("/home/newsinfo/9", "get", newsinfo)
 Mock.mock("/home/newsinfo/10", "get", newsinfo)
+
+// 默认返回第一页数据(id为新闻详情的id)
+// 评论数据：'/home/newsinfo/getcomments/id?pageindex=1'
+Mock.mock('/home/newsinfo/getcomments/1?pageindex=1', "get", commentslist)
+Mock.mock('/home/newsinfo/getcomments/2?pageindex=1', "get", commentslist)
+Mock.mock('/home/newsinfo/getcomments/3?pageindex=1', "get", commentslist)
+Mock.mock('/home/newsinfo/getcomments/4?pageindex=1', "get", commentslist)
+Mock.mock('/home/newsinfo/getcomments/5?pageindex=1', "get", commentslist)
+Mock.mock('/home/newsinfo/getcomments/6?pageindex=1', "get", commentslist)
+Mock.mock('/home/newsinfo/getcomments/7?pageindex=1', "get", commentslist)
+Mock.mock('/home/newsinfo/getcomments/8?pageindex=1', "get", commentslist)
+Mock.mock('/home/newsinfo/getcomments/9?pageindex=1', "get", commentslist)
+Mock.mock('/home/newsinfo/getcomments/10?pageindex=1', "get", commentslist)
+
+// 加载更多页的数据(评论总共4页)
+// 第1条新闻
+Mock.mock('/home/newsinfo/getcomments/1?pageindex=2', "get", commentslist)
+Mock.mock('/home/newsinfo/getcomments/1?pageindex=3', "get", commentslist)
+Mock.mock('/home/newsinfo/getcomments/1?pageindex=4', "get", commentslist)
+// 第2条新闻
+Mock.mock('/home/newsinfo/getcomments/2?pageindex=2', "get", commentslist)
+Mock.mock('/home/newsinfo/getcomments/2?pageindex=3', "get", commentslist)
+Mock.mock('/home/newsinfo/getcomments/2?pageindex=4', "get", commentslist)
+// 第3条新闻
+Mock.mock('/home/newsinfo/getcomments/3?pageindex=2', "get", commentslist)
+Mock.mock('/home/newsinfo/getcomments/3?pageindex=3', "get", commentslist)
+Mock.mock('/home/newsinfo/getcomments/3?pageindex=4', "get", commentslist)
+// 第4条新闻
+Mock.mock('/home/newsinfo/getcomments/4?pageindex=2', "get", commentslist)
+Mock.mock('/home/newsinfo/getcomments/4?pageindex=3', "get", commentslist)
+Mock.mock('/home/newsinfo/getcomments/4?pageindex=4', "get", commentslist)
+// 第5条新闻
+Mock.mock('/home/newsinfo/getcomments/5?pageindex=2', "get", commentslist)
+Mock.mock('/home/newsinfo/getcomments/5?pageindex=3', "get", commentslist)
+Mock.mock('/home/newsinfo/getcomments/5?pageindex=4', "get", commentslist)
+// 第6条新闻
+Mock.mock('/home/newsinfo/getcomments/6?pageindex=2', "get", commentslist)
+Mock.mock('/home/newsinfo/getcomments/6?pageindex=3', "get", commentslist)
+Mock.mock('/home/newsinfo/getcomments/6?pageindex=4', "get", commentslist)
+// 第7条新闻
+Mock.mock('/home/newsinfo/getcomments/7?pageindex=2', "get", commentslist)
+Mock.mock('/home/newsinfo/getcomments/7?pageindex=3', "get", commentslist)
+Mock.mock('/home/newsinfo/getcomments/7?pageindex=4', "get", commentslist)
+// 第8条新闻
+Mock.mock('/home/newsinfo/getcomments/8?pageindex=2', "get", commentslist)
+Mock.mock('/home/newsinfo/getcomments/8?pageindex=3', "get", commentslist)
+Mock.mock('/home/newsinfo/getcomments/8?pageindex=4', "get", commentslist)
+// 第9条新闻
+Mock.mock('/home/newsinfo/getcomments/9?pageindex=2', "get", commentslist)
+Mock.mock('/home/newsinfo/getcomments/9?pageindex=3', "get", commentslist)
+Mock.mock('/home/newsinfo/getcomments/9?pageindex=4', "get", commentslist)
+// 第10条新闻
+Mock.mock('/home/newsinfo/getcomments/10?pageindex=2', "get", commentslist)
+Mock.mock('/home/newsinfo/getcomments/10?pageindex=3', "get", commentslist)
+Mock.mock('/home/newsinfo/getcomments/10?pageindex=4', "get", commentslist)
+
+// 处理评论数据：'/home/newsinfo/postcomments/id'
+Mock.mock('/home/newsinfo/postcomments/1', "post", deal_comment)
+Mock.mock('/home/newsinfo/postcomments/2', "post", deal_comment)
+Mock.mock('/home/newsinfo/postcomments/3', "post", deal_comment)
+Mock.mock('/home/newsinfo/postcomments/4', "post", deal_comment)
+Mock.mock('/home/newsinfo/postcomments/5', "post", deal_comment)
+Mock.mock('/home/newsinfo/postcomments/6', "post", deal_comment)
+Mock.mock('/home/newsinfo/postcomments/7', "post", deal_comment)
+Mock.mock('/home/newsinfo/postcomments/8', "post", deal_comment)
+Mock.mock('/home/newsinfo/postcomments/9', "post", deal_comment)
+Mock.mock('/home/newsinfo/postcomments/10', "post", deal_comment)
+
+
 

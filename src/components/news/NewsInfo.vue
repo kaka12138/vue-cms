@@ -16,7 +16,7 @@
         </div>
 
         <!-- 评论子组件区域 -->
-        <comment-box></comment-box>  
+        <comment-box :id=id></comment-box>
 
 
     </div>
