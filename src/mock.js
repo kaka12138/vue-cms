@@ -18,7 +18,7 @@ const lubotuList = function() {
 const newslist = function() {
     var news = []
 
-    for (let i=1; i<11; i++) {
+    for (let i=0; i<10; i++) {
         let id = i
         let add_time = Random.datetime()  // 新闻发表时间
         let click = Mock.mock({
@@ -61,7 +61,7 @@ const newsinfo = function() {
 const commentslist = function() {
     let comments = []
 
-    for(let i=1; i<11; i++){
+    for(let i=0; i<10; i++){
         let user_name = Random.cname()  // 评论用户
         let add_time = Random.datetime() // 评论时间
         let content = Random.csentence(10, 30) // 评论内容
@@ -217,6 +217,41 @@ const imglist = function(category) {
     }
 }
 
+// 图片详情数据
+const imginfo = function(){
+    let title = Random.ctitle()  // 详情页标题
+    let click = Mock.mock({
+        "num|1-100": 100
+    }).num // 图片点击次数
+    let add_time = Random.date()  // 图片发表时间
+    let content = Random.cparagraph()  // 图片描述内容
+
+    return {
+        message: {
+            title: title,
+            click: click,
+            add_time: add_time,
+            content: content
+        }
+    }
+}
+
+
+// 图片详情页对应的缩略图
+const thumbnail = function(){
+    let thumbnaillist = []
+    let img1 = { src: "https://images.pexels.com/photos/1028725/pexels-photo-1028725.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500", msrc: "https://images.pexels.com/photos/1028725/pexels-photo-1028725.jpeg?auto=compress&cs=tinysrgb&dpr=0.2&w=500" }
+    let img2 = {src: "https://images.pexels.com/photos/348520/pexels-photo-348520.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500", msrc: "https://images.pexels.com/photos/348520/pexels-photo-348520.jpeg?auto=compress&cs=tinysrgb&dpr=0.2&w=500"}
+    let img3 = {src: "https://images.pexels.com/photos/1024967/pexels-photo-1024967.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500", msrc: "https://images.pexels.com/photos/1024967/pexels-photo-1024967.jpeg?auto=compress&cs=tinysrgb&dpr=0.2&w=500" }
+    let img4 = {src: "https://images.pexels.com/photos/459303/pexels-photo-459303.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500", msrc: "https://images.pexels.com/photos/459303/pexels-photo-459303.jpeg?auto=compress&cs=tinysrgb&dpr=0.2&w=500" }
+    let img5 = {src: "https://images.pexels.com/photos/414716/pexels-photo-414716.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500", msrc: "https://images.pexels.com/photos/414716/pexels-photo-414716.jpeg?auto=compress&cs=tinysrgb&dpr=0.2&w=500" }
+
+    thumbnaillist.push(img1, img2, img3, img4, img5)
+
+    return {
+        message: thumbnaillist
+    }
+}
 
 
 
@@ -229,6 +264,7 @@ Mock.mock("/home/getlunbotu", "get", lubotuList)
 Mock.mock("/home/newslist/getnewslist", "get", newslist)
 
 //  新闻详情: '/home/newsinfo/id'
+Mock.mock("/home/newsinfo/0", "get", newsinfo)
 Mock.mock("/home/newsinfo/1", "get", newsinfo)
 Mock.mock("/home/newsinfo/2", "get", newsinfo)
 Mock.mock("/home/newsinfo/3", "get", newsinfo)
@@ -238,10 +274,10 @@ Mock.mock("/home/newsinfo/6", "get", newsinfo)
 Mock.mock("/home/newsinfo/7", "get", newsinfo)
 Mock.mock("/home/newsinfo/8", "get", newsinfo)
 Mock.mock("/home/newsinfo/9", "get", newsinfo)
-Mock.mock("/home/newsinfo/10", "get", newsinfo)
 
 // 默认返回第一页数据(id为新闻详情的id)
 // 评论数据：'/home/newsinfo/getcomments/id?pageindex=1'
+Mock.mock('/home/newsinfo/getcomments/0?pageindex=1', "get", commentslist)
 Mock.mock('/home/newsinfo/getcomments/1?pageindex=1', "get", commentslist)
 Mock.mock('/home/newsinfo/getcomments/2?pageindex=1', "get", commentslist)
 Mock.mock('/home/newsinfo/getcomments/3?pageindex=1', "get", commentslist)
@@ -251,51 +287,51 @@ Mock.mock('/home/newsinfo/getcomments/6?pageindex=1', "get", commentslist)
 Mock.mock('/home/newsinfo/getcomments/7?pageindex=1', "get", commentslist)
 Mock.mock('/home/newsinfo/getcomments/8?pageindex=1', "get", commentslist)
 Mock.mock('/home/newsinfo/getcomments/9?pageindex=1', "get", commentslist)
-Mock.mock('/home/newsinfo/getcomments/10?pageindex=1', "get", commentslist)
 
 // 加载更多页的数据(评论总共4页)
 // 第1条新闻
+Mock.mock('/home/newsinfo/getcomments/0?pageindex=2', "get", commentslist)
+Mock.mock('/home/newsinfo/getcomments/0?pageindex=3', "get", commentslist)
+Mock.mock('/home/newsinfo/getcomments/0?pageindex=4', "get", commentslist)
+// 第2条新闻
 Mock.mock('/home/newsinfo/getcomments/1?pageindex=2', "get", commentslist)
 Mock.mock('/home/newsinfo/getcomments/1?pageindex=3', "get", commentslist)
 Mock.mock('/home/newsinfo/getcomments/1?pageindex=4', "get", commentslist)
-// 第2条新闻
+// 第3条新闻
 Mock.mock('/home/newsinfo/getcomments/2?pageindex=2', "get", commentslist)
 Mock.mock('/home/newsinfo/getcomments/2?pageindex=3', "get", commentslist)
 Mock.mock('/home/newsinfo/getcomments/2?pageindex=4', "get", commentslist)
-// 第3条新闻
+// 第4条新闻
 Mock.mock('/home/newsinfo/getcomments/3?pageindex=2', "get", commentslist)
 Mock.mock('/home/newsinfo/getcomments/3?pageindex=3', "get", commentslist)
 Mock.mock('/home/newsinfo/getcomments/3?pageindex=4', "get", commentslist)
-// 第4条新闻
+// 第5条新闻
 Mock.mock('/home/newsinfo/getcomments/4?pageindex=2', "get", commentslist)
 Mock.mock('/home/newsinfo/getcomments/4?pageindex=3', "get", commentslist)
 Mock.mock('/home/newsinfo/getcomments/4?pageindex=4', "get", commentslist)
-// 第5条新闻
+// 第6条新闻
 Mock.mock('/home/newsinfo/getcomments/5?pageindex=2', "get", commentslist)
 Mock.mock('/home/newsinfo/getcomments/5?pageindex=3', "get", commentslist)
 Mock.mock('/home/newsinfo/getcomments/5?pageindex=4', "get", commentslist)
-// 第6条新闻
+// 第7条新闻
 Mock.mock('/home/newsinfo/getcomments/6?pageindex=2', "get", commentslist)
 Mock.mock('/home/newsinfo/getcomments/6?pageindex=3', "get", commentslist)
 Mock.mock('/home/newsinfo/getcomments/6?pageindex=4', "get", commentslist)
-// 第7条新闻
+// 第8条新闻
 Mock.mock('/home/newsinfo/getcomments/7?pageindex=2', "get", commentslist)
 Mock.mock('/home/newsinfo/getcomments/7?pageindex=3', "get", commentslist)
 Mock.mock('/home/newsinfo/getcomments/7?pageindex=4', "get", commentslist)
-// 第8条新闻
+// 第9条新闻
 Mock.mock('/home/newsinfo/getcomments/8?pageindex=2', "get", commentslist)
 Mock.mock('/home/newsinfo/getcomments/8?pageindex=3', "get", commentslist)
 Mock.mock('/home/newsinfo/getcomments/8?pageindex=4', "get", commentslist)
-// 第9条新闻
+// 第10条新闻
 Mock.mock('/home/newsinfo/getcomments/9?pageindex=2', "get", commentslist)
 Mock.mock('/home/newsinfo/getcomments/9?pageindex=3', "get", commentslist)
 Mock.mock('/home/newsinfo/getcomments/9?pageindex=4', "get", commentslist)
-// 第10条新闻
-Mock.mock('/home/newsinfo/getcomments/10?pageindex=2', "get", commentslist)
-Mock.mock('/home/newsinfo/getcomments/10?pageindex=3', "get", commentslist)
-Mock.mock('/home/newsinfo/getcomments/10?pageindex=4', "get", commentslist)
 
 // 处理评论数据：'/home/newsinfo/postcomments/id'
+Mock.mock('/home/newsinfo/postcomments/0', "post", deal_comment)
 Mock.mock('/home/newsinfo/postcomments/1', "post", deal_comment)
 Mock.mock('/home/newsinfo/postcomments/2', "post", deal_comment)
 Mock.mock('/home/newsinfo/postcomments/3', "post", deal_comment)
@@ -305,7 +341,6 @@ Mock.mock('/home/newsinfo/postcomments/6', "post", deal_comment)
 Mock.mock('/home/newsinfo/postcomments/7', "post", deal_comment)
 Mock.mock('/home/newsinfo/postcomments/8', "post", deal_comment)
 Mock.mock('/home/newsinfo/postcomments/9', "post", deal_comment)
-Mock.mock('/home/newsinfo/postcomments/10', "post", deal_comment)
 
 // 图片分类数据 '/home/photolist/getimgcategory'
 Mock.mock('/home/photolist/getimgcategory', "get", imgcategory)
@@ -325,4 +360,16 @@ Mock.mock('/home/photolist/getimages/4', "get", imglist('city'))
 // technology分类下的所有图片
 Mock.mock('/home/photolist/getimages/5', "get", imglist('technology'))
 
+// 图片详情'/home/photoinfo/getimginfo/img_id'
+Mock.mock('/home/photoinfo/getimginfo/0', "get", imginfo)
+Mock.mock('/home/photoinfo/getimginfo/1', "get", imginfo)
+Mock.mock('/home/photoinfo/getimginfo/2', "get", imginfo)
+Mock.mock('/home/photoinfo/getimginfo/3', "get", imginfo)
+Mock.mock('/home/photoinfo/getimginfo/4', "get", imginfo)
 
+// 图片详情页对应的缩略图 '/home/photoiinfo/getthumbnail/img_id'
+Mock.mock('/home/photoiinfo/getthumbnail/0', "get", thumbnail)
+Mock.mock('/home/photoiinfo/getthumbnail/1', "get", thumbnail)
+Mock.mock('/home/photoiinfo/getthumbnail/2', "get", thumbnail)
+Mock.mock('/home/photoiinfo/getthumbnail/3', "get", thumbnail)
+Mock.mock('/home/photoiinfo/getthumbnail/4', "get", thumbnail)

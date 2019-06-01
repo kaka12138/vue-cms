@@ -29,6 +29,10 @@ import VueAxios from 'vue-axios'
 Vue.use(VueAxios,axios);
 
 
+// 导入 vue-preview(实现缩略图)
+import VuePreview from 'vue-preview'
+Vue.use(VuePreview)
+
 // 导入mockjs
 require('./mock.js')
 

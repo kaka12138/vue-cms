@@ -2,7 +2,7 @@
     <div class="cmt-container">
         <h3>发表评论</h3>
         <hr>
-    <textarea placeholder="请输入评论(做多120字)" maxlength="120" v-model="msg"></textarea>
+    <textarea placeholder="请输入评论(最多120字)" maxlength="120" v-model="msg"></textarea>
 
     <mt-button type="primary" size="large" @click="postComment">发表评论</mt-button>
 
