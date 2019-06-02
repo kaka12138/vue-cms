@@ -44,7 +44,7 @@ export default {
 	}
 
 	.app-container {
-		padding-top: 30px;
+		padding-top: 40px;
 		padding-bottom: 50px;
 		background-color: #fff;
 		/* x方向上多余的部分进行裁剪*/

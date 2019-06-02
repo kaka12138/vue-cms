@@ -253,6 +253,73 @@ const thumbnail = function(){
     }
 }
 
+// 商品列表数据
+const goodslist = function(pageindex) {
+    let GoodsList = []
+    let all_img_url = [
+        "https://images.pexels.com/photos/1042143/pexels-photo-1042143.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+        "https://images.pexels.com/photos/39559/ipad-mockup-apple-business-39559.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+        "https://images.pexels.com/photos/38568/apple-imac-ipad-workplace-38568.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+        "https://images.pexels.com/photos/2148217/pexels-photo-2148217.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+        "https://images.pexels.com/photos/1006293/pexels-photo-1006293.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+        "https://images.pexels.com/photos/416343/pexels-photo-416343.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+        "https://images.pexels.com/photos/47261/pexels-photo-47261.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+        "https://images.pexels.com/photos/275033/pexels-photo-275033.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+        "https://images.pexels.com/photos/699122/pexels-photo-699122.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+        "https://images.pexels.com/photos/2351844/pexels-photo-2351844.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+    ]
+    for(let i=0; i<10; i++){
+        let id = i;
+        let title = Random.ctitle();  // 商品名称 
+        let add_time = Random.date();
+        let abstract = Random.csentence(10, 15); // 商品摘要
+        let img_url = all_img_url.slice(i, i+1);  // 商品图片链接
+        let old_price = Mock.mock({
+            "num|2990-3999": 2999
+        }).num;  // 商品的现在售价
+        let now_price = Mock.mock({
+            "num|2000-2999":2000
+        }).num;  // 商品的过去售价
+        let stock_quantity = Mock.mock({
+            "num|1-60":1
+        }).num;  // 商品的库存
+
+        let one_info = {id: id, title: title, add_time: add_time, abstract: abstract, now_price: now_price, img_url:img_url, old_price: old_price, stock_quantity: stock_quantity};
+        GoodsList.push(one_info)
+    }
+
+    if(pageindex == 1) {
+        return {
+            message: GoodsList.slice(0,6)
+        }
+    }else if(pageindex == 2) {
+        return {
+            message: GoodsList.slice()
+        }
+    }else{
+        // pageindex输入有误
+        return {
+            message: []
+        }
+    }
+    
+}
+
+// 商品页轮播图数据
+const goodsinfolunbotu = function() {
+    let img1 = "https://images.pexels.com/photos/1042143/pexels-photo-1042143.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+    let img2 = "https://images.pexels.com/photos/39559/ipad-mockup-apple-business-39559.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+    let img3 = "https://images.pexels.com/photos/38568/apple-imac-ipad-workplace-38568.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+
+    return {
+        message: [
+            { url: img1 },
+            { url: img2 },
+            { url: img3 }
+        ]
+    }
+}
+
 
 
 // 定义API
@@ -373,3 +440,25 @@ Mock.mock('/home/photoiinfo/getthumbnail/1', "get", thumbnail)
 Mock.mock('/home/photoiinfo/getthumbnail/2', "get", thumbnail)
 Mock.mock('/home/photoiinfo/getthumbnail/3', "get", thumbnail)
 Mock.mock('/home/photoiinfo/getthumbnail/4', "get", thumbnail)
+
+
+// 商品列表数据(返回第一页的数据) '/home/goodslist/getgoodslist?pageindex=1'
+Mock.mock('/home/goodslist/getgoodslist?pageindex=1', "get", goodslist(1))
+
+// 商品列表数据(返回第1，2页的数据) '/home/goodslist/getgoodslist?pageindex=2'
+Mock.mock('/home/goodslist/getgoodslist?pageindex=2', "get", goodslist(2))
+
+// 商品页轮播图数据 '/home/goodsinfo/getlunbotu/goods_id'
+Mock.mock('/home/goodsinfo/getlunbotu/0', "get", goodsinfolunbotu)
+Mock.mock('/home/goodsinfo/getlunbotu/1', "get", goodsinfolunbotu)
+Mock.mock('/home/goodsinfo/getlunbotu/2', "get", goodsinfolunbotu)
+Mock.mock('/home/goodsinfo/getlunbotu/3', "get", goodsinfolunbotu)
+Mock.mock('/home/goodsinfo/getlunbotu/4', "get", goodsinfolunbotu)
+Mock.mock('/home/goodsinfo/getlunbotu/5', "get", goodsinfolunbotu)
+Mock.mock('/home/goodsinfo/getlunbotu/6', "get", goodsinfolunbotu)
+Mock.mock('/home/goodsinfo/getlunbotu/7', "get", goodsinfolunbotu)
+Mock.mock('/home/goodsinfo/getlunbotu/8', "get", goodsinfolunbotu)
+Mock.mock('/home/goodsinfo/getlunbotu/9', "get", goodsinfolunbotu)
+
+
+

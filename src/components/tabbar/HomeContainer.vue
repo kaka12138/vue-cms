@@ -1,11 +1,7 @@
 <template>
     <div>
         <!-- 轮播图 -->
-        <mt-swipe :auto="4000">
-            <mt-swipe-item v-for="item in lunbotulist" :key="item.url">
-                <img :src="item.url" alt="">
-            </mt-swipe-item>
-        </mt-swipe>
+        <swiper-box :lunbotulist="lunbotulist"></swiper-box>
         
         <ul class="mui-table-view mui-grid-view mui-grid-9">
             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
@@ -19,10 +15,10 @@
                     <div class="mui-media-body">图片分享</div>
                 </router-link></li>
             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-                <a href="#">
+                <router-link to="/home/goodslist">
                     <img src="../../images/商品购买.png" alt="" srcset="">
                     <div class="mui-media-body">商品购买</div>
-                </a></li>
+                </router-link></li>
             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
                 <a href="#">
                     <img src="../../images/留言反馈.png" alt="" srcset="">
@@ -46,6 +42,10 @@
     import {
         Toast
     } from 'mint-ui'
+
+    //  导入轮播图组件
+    import swiper from '../subcomponets/Lunbotu.vue'
+
     export default {
         data() {
             return {
@@ -69,33 +69,15 @@
                 })
             }
         },
+        components: {
+            "swiper-box": swiper
+        }
 
     }
 </script>
 
 
 <style lang="css" scoped>
-    .mint-swipe {
-        height: 150px;
-    }
-
-    .mint-swipe-item:nth-child(1) {
-        background-color: red;
-    }
-
-    .mint-swipe-item:nth-child(2) {
-        background-color: blue;
-    }
-
-    .mint-swipe-item:nth-child(3) {
-        background-color: cyan;
-    }
-
-    .mint-swipe img {
-        height: 100%;
-        width: 100%
-    }
-
     .mui-grid-view.mui-grid-9 {
         border: none;
     }
@@ -117,6 +99,5 @@
     .mui-table-view.mui-grid-view .mui-table-view-cell .mui-media-body {
         font-size: 5px;
     }
-
 
 </style>

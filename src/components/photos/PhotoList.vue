@@ -6,7 +6,9 @@
                 class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
                 <div class="mui-scroll">
                     <a :class="['mui-control-item', item.id==0 ? 'mui-active': '']" v-for="item in categories"
-                        :key="item.id" @click="getimgListByCategoryId(item.id)">
+                        :key="item.id" @tap="getimgListByCategoryId(item.id)">
+                        <!-- 手机调式的bug：在mui组件中，@click事件不起作用 -->
+                        <!-- 解决：使用@tap事件 -->
                         {{ item.title }}
                     </a>
                 </div>
@@ -94,10 +96,18 @@
         touch-action: pan-y;
     }
 
+    .mui-slider {
+        margin-top: 13px;
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+        width: 100;
+    }
+
     .photo-list {
         list-style: none;
         margin: 0;
-        padding: 10px;
+        padding: 8px;
         padding-bottom: 0;
         li {
             background-color: #ccc;
