@@ -305,7 +305,7 @@ const goodslist = function(pageindex) {
     
 }
 
-// 商品页轮播图数据
+// 商品详情页页轮播图数据
 const goodsinfolunbotu = function() {
     let img1 = "https://images.pexels.com/photos/1042143/pexels-photo-1042143.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
     let img2 = "https://images.pexels.com/photos/39559/ipad-mockup-apple-business-39559.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
@@ -317,6 +317,34 @@ const goodsinfolunbotu = function() {
             { url: img2 },
             { url: img3 }
         ]
+    }
+}
+
+// 商品详情页数据
+const goodsinfo = function(goods_id){
+    let goodsinfolist = [];
+    for(let i=0; i<10; i++){
+        let id = id;
+        let title = Random.ctitle();  // 商品标题
+        let add_time = Random.date();  // 商品添加时间
+        let goods_num = Random.id();  // 商品货号
+        let stock_quantity = Mock.mock({
+            "num|1-100":100
+        }).num; // 商品库存
+        let old_price = Mock.mock({
+            "num|2990-3999": 2999
+        }).num;  // 商品的现在售价
+        let now_price = Mock.mock({
+            "num|2000-2999":2000
+        }).num;  // 商品的过去售价
+        
+        let one_info = { id: id, title: title, add_time: add_time, goods_num:goods_num, stock_quantity:stock_quantity, old_price: old_price, now_price: now_price };
+
+        goodsinfolist.push(one_info);
+    }
+
+    return {
+        message: goodsinfolist.slice(goods_id, goods_id + 1)[0]
     }
 }
 
@@ -460,5 +488,17 @@ Mock.mock('/home/goodsinfo/getlunbotu/7', "get", goodsinfolunbotu)
 Mock.mock('/home/goodsinfo/getlunbotu/8', "get", goodsinfolunbotu)
 Mock.mock('/home/goodsinfo/getlunbotu/9', "get", goodsinfolunbotu)
 
+
+// 商品详情页数据: '/home/goodsinfo/getgoodsinfo/goods_id'
+Mock.mock('/home/goodsinfo/getgoodsinfo/0', "get", goodsinfo(0))
+Mock.mock('/home/goodsinfo/getgoodsinfo/1', "get", goodsinfo(1))
+Mock.mock('/home/goodsinfo/getgoodsinfo/2', "get", goodsinfo(2))
+Mock.mock('/home/goodsinfo/getgoodsinfo/3', "get", goodsinfo(3))
+Mock.mock('/home/goodsinfo/getgoodsinfo/4', "get", goodsinfo(4))
+Mock.mock('/home/goodsinfo/getgoodsinfo/5', "get", goodsinfo(5))
+Mock.mock('/home/goodsinfo/getgoodsinfo/6', "get", goodsinfo(6))
+Mock.mock('/home/goodsinfo/getgoodsinfo/7', "get", goodsinfo(7))
+Mock.mock('/home/goodsinfo/getgoodsinfo/8', "get", goodsinfo(8))
+Mock.mock('/home/goodsinfo/getgoodsinfo/9', "get", goodsinfo(9))
 
 
