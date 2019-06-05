@@ -24,7 +24,8 @@
                     <p class="price">
                         市场价：<span><del>￥{{ goodsinfo.old_price }}</del></span> &nbsp;&nbsp;销售价:<span class="now_price">￥{{ goodsinfo.now_price }}</span>
                     </p>
-                    <p>购买数量：<numbox class="num-box"></numbox></p>
+                    <!-- 父组件向子组件传递方法/属性 -->
+                    <p>购买数量：<numbox class="num-box" @getcount="getSelectedCount" :max="goodsinfo.stock_quantity"></numbox></p>
 
                     <p class="buy">
                         <mt-button type="primary" size="small">立即购买</mt-button>
@@ -69,7 +70,8 @@
                 id: this.$route.params.id, // 商品id
                 lunbotulist: [], // 轮播图数据
                 goodsinfo: {},  // 商品信息
-                ballflag: false  // 控制小球隐藏和显示
+                ballflag: false,  // 控制小球隐藏和显示
+                selectedcount: 1  // 购买数量
             }
         },
         created() {
@@ -112,7 +114,19 @@
             },
             // 添加到购物车
             addShopCar() {
+                // 控制小球的显示
                 this.ballflag = !this.ballflag;
+                // 添加商品的信息 {id：商品id,count: 购买该商品的数量, price：商品单价, selected: 商品是否被选中 }
+                let goodsinfo = { 
+                    id: this.id, 
+                    count: this.selectedcount, 
+                    price: this.goodsinfo.now_price, 
+                    selected: true 
+                    }
+
+                // 调用store中mutation提供的addToCart方法
+                this.$store.commit('addToCart', goodsinfo);
+
             },
 
             // 动画的钩子函数
@@ -147,7 +161,12 @@
             },
             afterEnter(el) {
                 this.ballflag = !this.ballflag;
-            }
+            },
+            // 父组件向子组件传递方法，来实现子组件向父组件传值的目的
+            getSelectedCount(count){
+                this.selectedcount = count;
+                // console.log("父组件获取的数字为" + this.selectedcount);
+            },
             
         },
         components: {

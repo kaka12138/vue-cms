@@ -36,9 +36,15 @@ Vue.use(VuePreview)
 // 导入mockjs
 require('./mock.js')
 
+
+// 导入vuex实例
+import store from './store.js'
+
 var vm = new Vue({
   el: "#app",
   render: h => h(app),
   // 挂载路由
-  router
+  router,
+  // 过载vuex实例
+  store
 })
