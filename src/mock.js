@@ -348,7 +348,20 @@ const goodsinfo = function(goods_id){
     }
 }
 
+// 购物车页面中的数据
+const shopcar = function(options) {
+    console.log(options.url);
+    console.log(options.type);
+    console.log(options.body);
+    console.log( options.url.match(/\d/g));
+    return {
+        message: "success"
+    }
+}
 
+
+// 购物车页面中的数据：'/shopcar/getgoodslist/ids'
+Mock.mock(/\/shopcar\/getgoodslist\/.*/, "get", shopcar)
 
 // 定义API
 

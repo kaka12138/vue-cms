@@ -45,10 +45,19 @@
 
             }
         },
+        created() {
+            this.getGoodsListInCart()
+        },
         methods: {
             // 获取购物车中所有商品的数据
-            getGoodsListInCar() {
-                
+            getGoodsListInCart() {
+                this.axios.get("/shopcar/getgoodslist/1,2,3").then((result) => {
+                    if(result.status === 200){
+                        console.log("success");
+                    }
+                }).catch((err) => {
+                    console.log(err.message);
+                });
             }
         },
         components: {
