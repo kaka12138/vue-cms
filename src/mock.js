@@ -322,6 +322,7 @@ const goodsinfolunbotu = function() {
 
 // 商品详情页数据
 const goodsinfo = function(goods_id){
+    
     let goodsinfolist = [];
     for(let i=0; i<10; i++){
         let id = id;
@@ -350,18 +351,52 @@ const goodsinfo = function(goods_id){
 
 // 购物车页面中的数据
 const shopcar = function(options) {
-    console.log(options.url);
-    console.log(options.type);
-    console.log(options.body);
-    console.log( options.url.match(/\d/g));
-    return {
-        message: "success"
+    let all_img_url = [
+        "https://images.pexels.com/photos/1042143/pexels-photo-1042143.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+        "https://images.pexels.com/photos/39559/ipad-mockup-apple-business-39559.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+        "https://images.pexels.com/photos/38568/apple-imac-ipad-workplace-38568.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+        "https://images.pexels.com/photos/2148217/pexels-photo-2148217.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+        "https://images.pexels.com/photos/1006293/pexels-photo-1006293.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+        "https://images.pexels.com/photos/416343/pexels-photo-416343.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+        "https://images.pexels.com/photos/47261/pexels-photo-47261.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+        "https://images.pexels.com/photos/275033/pexels-photo-275033.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+        "https://images.pexels.com/photos/699122/pexels-photo-699122.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+        "https://images.pexels.com/photos/2351844/pexels-photo-2351844.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+    ]
+
+    let goods_id_list = options.url.match(/\d/g);  // 提取出传过来的url中的商品id
+    let goods_list = [];
+    let goods_by_id = [];  // 根据要求的id返回对应数据
+
+    for(let i=0; i<10; i++) {
+        let id = i;  // 商品id
+        let title = Random.ctitle();  // 商品标题
+        let sell_price = Mock.mock({
+            "num|2000-2999":2000
+        }).num;  // 商品销售价格
+        let count = 1; // 购买的数量：默认为1，前端通过store中数据渲染
+        let img_url = all_img_url.slice(i, i+1)[0];  // 商品图片
+        
+        let one_info = { id: id, title: title, sell_price: sell_price, count: count, img_url: img_url }
+        goods_list.push(one_info) 
     }
+
+    // 提取出对应数据
+    goods_id_list.forEach(item => {
+        goods_list.forEach( one_info => {
+            if(item == one_info.id) {
+                goods_by_id.push(one_info)
+            }
+        })
+    })
+
+    return {
+        message: goods_by_id
+    }
+
+ 
 }
 
-
-// 购物车页面中的数据：'/shopcar/getgoodslist/ids'
-Mock.mock(/\/shopcar\/getgoodslist\/.*/, "get", shopcar)
 
 // 定义API
 
@@ -515,3 +550,5 @@ Mock.mock('/home/goodsinfo/getgoodsinfo/8', "get", goodsinfo(8))
 Mock.mock('/home/goodsinfo/getgoodsinfo/9', "get", goodsinfo(9))
 
 
+// 购物车页面中商品列表的数据：'/shopcar/getgoodslist/ids'
+Mock.mock(/\/shopcar\/getgoodslist\/.*/, "get", shopcar)

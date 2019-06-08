@@ -1,46 +1,76 @@
 <template>
-  <div class="app-container">
-    <!-- Header区域 -->
-    <mt-header fixed title="Vue项目"></mt-header>
+	<div class="app-container">
+		<!-- Header区域 -->
+		<mt-header fixed title="Vue项目">
+			<span slot="left" @click="goBcak" v-show="flag">
+				<mt-button icon="back">返回</mt-button>
+			</span>
+		</mt-header>
 
-    <!-- 路由控制的区域 -->
+		<!-- 路由控制的区域 -->
 		<transition>
 			<router-view></router-view>
 		</transition>
 
-    <!-- tabbar底部区域 -->
-    <nav class="mui-bar mui-bar-tab">
-		<router-link class="mui-tab-item-new" to="/home">
-			<span class="mui-icon mui-icon-home"></span>
-			<span class="mui-tab-label">首页</span>
-		</router-link>
-		<router-link class="mui-tab-item-new" to="/member">
-			<span class="mui-icon mui-icon-contact"></span>
-			<span class="mui-tab-label">会员</span>
-		</router-link>
-		<router-link class="mui-tab-item-new" to="/shopcar">
-		<!-- 使用vuex计算badge的值 -->
-			<span class="mui-icon mui-icon-extra mui-icon-extra-cart"><span class="mui-badge" id="badge">{{ $store.getters.getAllCount }}</span></span>
-			<span class="mui-tab-label">购物车</span>
-		</router-link>
-		<router-link class="mui-tab-item-new" to="/search">
-			<span class="mui-icon mui-icon-search"></span>
-			<span class="mui-tab-label">搜索</span>
-		</router-link>
-	</nav>
-    
-  </div>
+		<!-- tabbar底部区域 -->
+		<nav class="mui-bar mui-bar-tab">
+			<router-link class="mui-tab-item-new" to="/home">
+				<span class="mui-icon mui-icon-home"></span>
+				<span class="mui-tab-label">首页</span>
+			</router-link>
+			<router-link class="mui-tab-item-new" to="/member">
+				<span class="mui-icon mui-icon-contact"></span>
+				<span class="mui-tab-label">会员</span>
+			</router-link>
+			<router-link class="mui-tab-item-new" to="/shopcar">
+				<!-- 使用vuex计算badge的值 -->
+				<span class="mui-icon mui-icon-extra mui-icon-extra-cart"><span class="mui-badge"
+						id="badge">{{ $store.getters.getAllCount }}</span></span>
+				<span class="mui-tab-label">购物车</span>
+			</router-link>
+			<router-link class="mui-tab-item-new" to="/search">
+				<span class="mui-icon mui-icon-search"></span>
+				<span class="mui-tab-label">搜索</span>
+			</router-link>
+		</nav>
+
+	</div>
 </template>
 
 <script>
-export default {
-  
-}
+	export default {
+		data() {
+			return {
+				flag: false  // 是否显示返回按钮
+			}
+		},
+		created() {
+			// 组件刚创建时，判断路由路径是否为"/home",决定是否显示返回按钮
+			this.flag = this.$route.path === '/home'? false: true;
+
+		}, 
+		methods: {
+			// 返回按钮操作
+			goBcak() {
+				this.$router.go(-1);
+			},
+		},
+		watch: {
+			// 监听路由路径，返回首页时隐藏返回按钮
+			'$route.path': function(newVal){
+				if(newVal === '/home') {
+					this.flag = false;
+				}else {
+					this.flag = true;
+				}
+			}
+		}
+	}
 </script>
 
 
 <style lang="css" scoped>
-.mint-header {
+	.mint-header {
 		z-index: 99;
 	}
 
@@ -49,56 +79,55 @@ export default {
 		padding-bottom: 50px;
 		background-color: #fff;
 		/* x方向上多余的部分进行裁剪*/
-		overflow-x: hidden;  
+		overflow-x: hidden;
 	}
 
 	.v-enter {
-			opacity: 0;
-			transform: translateX(100%);
+		opacity: 0;
+		transform: translateX(100%);
 	}
 
 	.v-leave-to {
-			opacity: 0;
-			transform: translateX(-100%);
-			position:absolute;
+		opacity: 0;
+		transform: translateX(-100%);
+		position: absolute;
 	}
 
-	.v-enter-active, .v-leave-active {
-			transition: all 0.5s ease;
+	.v-enter-active,
+	.v-leave-active {
+		transition: all 0.5s ease;
 	}
 
 	/* 因为mui-tab-item和mui js中的控件产生冲突，导致底部tabbar栏不能使用*/
 	/* 解决：修改mui-tab-item的类名*/
 	.mui-bar-tab .mui-tab-item-new .mui-active {
-			color: #007aff;
+		color: #007aff;
 	}
 
 	.mui-bar-tab .mui-tab-item-new {
-			display: table-cell;
-			overflow: hidden;
-			width: 1%;
-			height: 50px;
-			text-align: center;
-			vertical-align: middle;
-			white-space: nowrap;
-			text-overflow: ellipsis;
-			color: #929292;
+		display: table-cell;
+		overflow: hidden;
+		width: 1%;
+		height: 50px;
+		text-align: center;
+		vertical-align: middle;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		color: #929292;
 	}
 
 	.mui-bar-tab .mui-tab-item-new .mui-icon {
-			top: 3px;
-			width: 24px;
-			height: 24px;
-			padding-top: 0;
-			padding-bottom: 0;
-	} 
-
-	.mui-bar-tab .mui-tab-item-new .mui-icon~.mui-tab-label {
-			font-size: 11px;
-			display: block;
-			overflow: hidden;
-			text-overflow: ellipsis;
+		top: 3px;
+		width: 24px;
+		height: 24px;
+		padding-top: 0;
+		padding-bottom: 0;
 	}
 
-
+	.mui-bar-tab .mui-tab-item-new .mui-icon~.mui-tab-label {
+		font-size: 11px;
+		display: block;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
 </style>
